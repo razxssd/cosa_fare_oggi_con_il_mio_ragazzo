@@ -42,8 +42,6 @@ function isToday(date) {
 
 
 const composeTodo = () => {
-conso
-
     const activity = todo_of_the_day.find(el => isToday(new Date(el.Date)))
     const title_todo = document.getElementById('title_todo');
     title_todo.innerText = activity.Title;
