@@ -5,14 +5,14 @@ var todo_of_the_day = [{
 }, {
     "Title": "Cosa ne pensate di una gita fuori?",
     "Todo": "Prendete il pranzo al sacco e andate a fare una gita fuori città",
-    "Date": "2023-04-26T21:00:00.000Z"
+    "Date": "2023-04-25T21:00:00.000Z"
 }, {
     "Title": "Ti stai annoiando?",
     "Todo": "È arrivato il momento di prendere un video di tik tok che si possa fare in 2 e che va di moda.\n Poi registratevi mentre lo fate finchè non è almeno decente :)",
-    "Date": "2023-04-25T21:00:00.000Z"
+    "Date": "2023-04-26T21:00:00.000Z"
 }, {
-    "Title": "Complimenti oggi farete una passeggiata al parco",
-    "Todo": "Fare una passeggiata al parco",
+    "Title": "Sapete cos'è wordle?",
+    "Todo": "Cercate su google Wordle e sfidatevi, vince chi trova la parola corretta in meno tentativi, una sfida senza regole!",
     "Date": "2023-04-27T21:00:00.000Z"
 }, {
     "Title": "Complimenti oggi dovrete fare un allenamento intensivo per 3 ore",
