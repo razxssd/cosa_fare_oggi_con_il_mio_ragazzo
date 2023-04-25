@@ -3,13 +3,13 @@ var todo_of_the_day = [{
     "Todo": "Fare un Puzzle",
     "Date": "2023-04-24T21:00:00.000Z"
 }, {
-    "Title": "Complimenti oggi farete un un bel dolce insieme",
-    "Todo": "Fare un dolce",
-    "Date": "2023-04-25T21:00:00.000Z"
-}, {
-    "Title": "Complimenti oggi andrete a ballare",
-    "Todo": "Si va a ballare",
+    "Title": "Cosa ne pensate di una gita fuori?",
+    "Todo": "Prendete il pranzo al sacco e andate a fare una gita fuori città",
     "Date": "2023-04-26T21:00:00.000Z"
+}, {
+    "Title": "Ti stai annoiando?",
+    "Todo": "È arrivato il momento di prendere un video di tik tok che si possa fare in 2 e che va di moda.\n Poi registratevi mentre lo fate finchè non è almeno decente :)",
+    "Date": "2023-04-25T21:00:00.000Z"
 }, {
     "Title": "Complimenti oggi farete una passeggiata al parco",
     "Todo": "Fare una passeggiata al parco",
@@ -32,6 +32,24 @@ var todo_of_the_day = [{
     "Date": "2023-05-01T21:00:00.000Z"
 }]
 
+// Add a random integer to Math, as it should be.
+Math.randInt = function(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
+  
+  
+  // Get a string back from the input where all characters not including spaces are replaced by a random character.
+  function getRandStringFrom(chars, string) {
+    var random_string = "";
+  
+    for (var char = 0; char < string.length + 1; char++) {
+      if (string[char] == " ") random_string += " ";
+      else random_string += chars.charAt(Math.randInt(0, chars.length));
+    }
+  
+    return random_string;
+  }
+
 function isToday(date) {
     const now = new Date()
 
@@ -47,8 +65,259 @@ const composeTodo = () => {
     title_todo.innerText = activity.Title;
 
     const activity_todo = document.getElementById('activity_todo');
-    activity_todo.innerText = activity.Todo;
+    // activity_todo.innerText = activity.Todo;
+
+
+    new WordShuffler(title_todo, {
+        textColor: '#59c4f9',
+        timeOffset: 2,
+        mixCapital: true,
+        mixSpecialCharacters: true
+    });
+
+    setTimeout(() => {
+        activity_todo.style.display = "block";
+        
+        (function loop() {
+            var original_content = activity.Todo;
+            var current_length = 0;
+        
+            // This is the update loop that updates for every character in the original string.
+            var appearUpdate = setInterval(function() {
+              // Get the current length substring from the orifinal content.
+              var substring_section = original_content.substring(0, current_length);
+              
+              // If the first or last characters are spaces, make them non-breaking so the text doesn't stagger.
+              substring_section = substring_section.replace(/^ /, "\xa0").replace(/ $/, "\xa0");
+              
+              // Get the randomised version of the substring above.
+              var random_string = getRandStringFrom("@#$%^", substring_section);
+        
+              // Set the respective elements.
+              // random_appear.innerText = random_string;
+              activity_todo.innerText = substring_section;
+        
+              // Increase the length and prepare for the next update.
+              current_length++;
+        
+              // If the current string length is as long as the final message, it must be done.
+              if (current_length > original_content.length) clearInterval(appearUpdate);
+            }, 50);
+        
+            // Run this current loop again.
+            // setTimeout(loop, 5000);
+          })();
+    }, 1000)
+
+    
 }
+
+function WordShuffler(holder, opt) {
+    var that = this;
+    var time = 0;
+    this.now;
+    this.then = Date.now();
+
+    this.delta;
+    this.currentTimeOffset = 0;
+
+    this.word = null;
+    this.currentWord = null;
+    this.currentCharacter = 0;
+    this.currentWordLength = 0;
+
+
+    var options = {
+        fps: 20,
+        timeOffset: 5,
+        textColor: '#000',
+        fontSize: "50px",
+        useCanvas: false,
+        mixCapital: false,
+        mixSpecialCharacters: false,
+        needUpdate: true,
+        colors: [
+            '#f44336', '#e91e63', '#9c27b0',
+            '#673ab7', '#3f51b5', '#2196f3',
+            '#03a9f4', '#00bcd4', '#009688',
+            '#4caf50', '#8bc34a', '#cddc39',
+            '#ffeb3b', '#ffc107', '#ff9800',
+            '#ff5722', '#795548', '#9e9e9e',
+            '#607d8b'
+        ]
+    }
+
+    if (typeof opt != "undefined") {
+        for (key in opt) {
+            options[key] = opt[key];
+        }
+    }
+
+
+
+    this.needUpdate = true;
+    this.fps = options.fps;
+    this.interval = 1000 / this.fps;
+    this.timeOffset = options.timeOffset;
+    this.textColor = options.textColor;
+    this.fontSize = options.fontSize;
+    this.mixCapital = options.mixCapital;
+    this.mixSpecialCharacters = options.mixSpecialCharacters;
+    this.colors = options.colors;
+
+    this.useCanvas = options.useCanvas;
+
+    this.chars = [
+        'A', 'B', 'C', 'D',
+        'E', 'F', 'G', 'H',
+        'I', 'J', 'K', 'L',
+        'M', 'N', 'O', 'P',
+        'Q', 'R', 'S', 'T',
+        'U', 'V', 'W', 'X',
+        'Y', 'Z'
+    ];
+    this.specialCharacters = [
+        '!', '§', '$', '%',
+        '&', '/', '(', ')',
+        '=', '?', '_', '<',
+        '>', '^', '°', '*',
+        '#', '-', ':', ';', '~'
+    ]
+
+    if (this.mixSpecialCharacters) {
+        this.chars = this.chars.concat(this.specialCharacters);
+    }
+
+    this.getRandomColor = function () {
+        var randNum = Math.floor(Math.random() * this.colors.length);
+        return this.colors[randNum];
+    }
+
+    //if Canvas
+
+    this.position = {
+        x: 0,
+        y: 50
+    }
+
+    //if DOM
+    if (typeof holder != "undefined") {
+        this.holder = holder;
+    }
+
+    if (!this.useCanvas && typeof this.holder == "undefined") {
+        console.warn('Holder must be defined in DOM Mode. Use Canvas or define Holder');
+    }
+
+
+    this.getRandCharacter = function (characterToReplace) {
+        if (characterToReplace == " ") {
+            return ' ';
+        }
+        var randNum = Math.floor(Math.random() * this.chars.length);
+        var lowChoice = -.5 + Math.random();
+        var picketCharacter = this.chars[randNum];
+        var choosen = picketCharacter.toLowerCase();
+        if (this.mixCapital) {
+            choosen = lowChoice < 0 ? picketCharacter.toLowerCase() : picketCharacter;
+        }
+        return choosen;
+
+    }
+
+    this.writeWord = function (word) {
+        this.word = word;
+        this.currentWord = word.split('');
+        this.currentWordLength = this.currentWord.length;
+
+    }
+
+    this.generateSingleCharacter = function (color, character) {
+        var span = document.createElement('span');
+        span.style.color = color;
+        span.innerHTML = character;
+        return span;
+    }
+
+    this.updateCharacter = function (time) {
+
+        this.now = Date.now();
+        this.delta = this.now - this.then;
+
+
+
+        if (this.delta > this.interval) {
+            this.currentTimeOffset++;
+
+            var word = [];
+
+            if (this.currentTimeOffset === this.timeOffset && this.currentCharacter !== this.currentWordLength) {
+                this.currentCharacter++;
+                this.currentTimeOffset = 0;
+            }
+            for (var k = 0; k < this.currentCharacter; k++) {
+                word.push(this.currentWord[k]);
+            }
+
+            for (var i = 0; i < this.currentWordLength - this.currentCharacter; i++) {
+                word.push(this.getRandCharacter(this.currentWord[this.currentCharacter + i]));
+            }
+
+
+            if (that.useCanvas) {
+                c.clearRect(0, 0, stage.x * stage.dpr, stage.y * stage.dpr);
+                c.font = that.fontSize + " sans-serif";
+                var spacing = 0;
+                word.forEach(function (w, index) {
+                    if (index > that.currentCharacter) {
+                        c.fillStyle = that.getRandomColor();
+                    } else {
+                        c.fillStyle = that.textColor;
+                    }
+                    c.fillText(w, that.position.x + spacing, that.position.y);
+                    spacing += c.measureText(w).width;
+                });
+            } else {
+
+                if (that.currentCharacter === that.currentWordLength) {
+                    that.needUpdate = false;
+                }
+                this.holder.innerHTML = '';
+                word.forEach(function (w, index) {
+                    var color = null
+                    if (index > that.currentCharacter) {
+                        color = that.getRandomColor();
+                    } else {
+                        color = that.textColor;
+                    }
+                    that.holder.appendChild(that.generateSingleCharacter(color, w));
+                });
+            }
+            this.then = this.now - (this.delta % this.interval);
+        }
+    }
+
+    this.restart = function () {
+        this.currentCharacter = 0;
+        this.needUpdate = true;
+    }
+
+    function update(time) {
+        time++;
+        if (that.needUpdate) {
+            that.updateCharacter(time);
+        }
+        requestAnimationFrame(update);
+    }
+
+    this.writeWord(this.holder.innerHTML);
+
+
+    console.log(this.currentWord);
+    update(time);
+}
+
+
 
 function init() {
 
@@ -211,6 +480,13 @@ function init() {
 
     composeTodo();
 
+    var start_challange_button = document.getElementById('start_challange');
+    start_challange_button.addEventListener("mouseover", (event) => {
+        start_challange_button.innerText = "Arriverà presto!"
+    });
+    start_challange_button.addEventListener("mouseout", (event) => {
+        start_challange_button.innerText = "Start your challange"
+    });
 }
 
 window.addEventListener('DOMContentLoaded', init)

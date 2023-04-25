@@ -11,10 +11,48 @@ body {
 }
 
 h2 {
-    font-size: 4rem;
+
+    text-align: center;
+    min-height: 100px;
+
 }
-h5 {
-    font-size: 1.2rem;
+
+
+
+#title_todo {
+    font-weight: 700;
+    font-size: 3rem;
+
+}
+
+#activity_todo {
+    font-weight: 400;
+    font-size: 2.8rem;
+}
+
+@media only screen and (max-width: 1000px) {
+    h2 {
+
+        min-height: 200px;
+
+    }
+
+    #title_todo {
+
+        font-size: 4.2rem;
+
+    }
+
+    #activity_todo {
+
+        font-size: 3.9rem;
+    }
+
+    .custom-btn {
+        width: 510px;
+
+        font-size: 3rem;
+    }
 }
 
 input,
@@ -52,7 +90,7 @@ button {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-  
+
 
     overflow: hidden;
 }
@@ -218,7 +256,7 @@ button:hover {
     color: white;
     bottom: 10px;
     right: 10px;
-    font-size: 10px;
+    font-size: 2rem;
 }
 
 a {
@@ -286,4 +324,70 @@ a:hover {
     p::before {
         font-size: 3rem;
     }
+}
+
+.container {
+    width: 70%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-btn {
+
+    width: 320px;
+    font-size: 1.8rem;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px 25px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+        7px 7px 20px 0px rgba(0, 0, 0, .1),
+        4px 4px 5px 0px rgba(0, 0, 0, .1);
+    outline: none;
+}
+
+/* 16 */
+.btn-16 {
+    border: none;
+
+}
+
+.btn-16:after {
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 100%;
+    top: 0;
+    left: 0;
+    direction: rtl;
+    z-index: -1;
+    box-shadow:
+        -7px -7px 20px 0px #fff9,
+        -4px -4px 5px 0px #fff9,
+        7px 7px 20px 0px #0002,
+        4px 4px 5px 0px #0001;
+    transition: all 0.3s ease;
+}
+
+.btn-16:hover {
+    color: #000;
+}
+
+.btn-16:hover:after {
+    left: auto;
+    right: 0;
+    width: 100%;
+}
+
+.btn-16:active {
+    top: 2px;
 }
