@@ -68,12 +68,12 @@ const composeTodo = () => {
     // activity_todo.innerText = activity.Todo;
 
 
-    new WordShuffler(title_todo, {
+    /*new WordShuffler(title_todo, {
         textColor: '#59c4f9',
         timeOffset: 2,
         mixCapital: true,
         mixSpecialCharacters: true
-    });
+    });*/
 
     setTimeout(() => {
         activity_todo.style.display = "block";
