@@ -15,40 +15,40 @@ var todo_of_the_day = [{
     "Todo": "Cercate su google Wordle e sfidatevi, vince chi trova la parola corretta in meno tentativi, una sfida senza regole!",
     "Date": "2023-04-27T21:00:00.000Z"
 }, {
-    "Title": "Complimenti oggi dovrete fare un allenamento intensivo per 3 ore",
-    "Todo": "Fare un allenamento intensivo",
+    "Title": "Purtroppo per il tuo ragazzo, oggi dovrà sporcarsi le mani!",
+    "Todo": "Decidi una ricetta che non hai mai fatto e provatela a fare insieme\n (vi consiglio un dolce)",
     "Date": "2023-04-28T21:00:00.000Z"
 }, {
-    "Title": "Complimenti oggi vi mangerete un bel Sushi",
-    "Todo": "Mangerete Sushi",
+    "Title": "Me pare proprio un bel giorno per una passeggiata, risulta ci sia anche il sole!",
+    "Todo": "Prendete la macchina (o i mezzi) e andate al lago / parco piu' vicino, fatevi una passeggiata e prendete un gelato.\n Passate del bel tempo assieme.",
     "Date": "2023-04-29T21:00:00.000Z"
 }, {
-    "Title": "Complimenti oggi mangerete Pizza",
-    "Todo": "Mangerete una pizza",
+    "Title": "Conoscetevi meglio, che secondo me vi serve",
+    "Todo": "Prendete una penna e un foglio. \n Senza farlo vedere all'atro, scrivete 10 cose che l'altra persona adora e 10 cose che odia/non glie piace.\n Alla fine fatevi vedere i fogli e vedete quanto ne sapete l'uno dell'altro.",
     "Date": "2023-04-30T21:00:00.000Z"
 }, {
-    "Title": "Complimenti oggi mangerete Hamburger",
-    "Todo": "Mangerete un Hamburger",
+    "Title": "Da quand'è che non cenate insieme?",
+    "Todo": "Organizzate (sempre insieme) una cena a lume di candela.\nChe sia a casa o fuori, l'importante è che ci sia della musica in sottofondo e che create un'atmosfera romantica per questa sera.",
     "Date": "2023-05-01T21:00:00.000Z"
 }]
 
 // Add a random integer to Math, as it should be.
-Math.randInt = function(min, max) {
+Math.randInt = function (min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
-  };
-  
-  
-  // Get a string back from the input where all characters not including spaces are replaced by a random character.
-  function getRandStringFrom(chars, string) {
+};
+
+
+// Get a string back from the input where all characters not including spaces are replaced by a random character.
+function getRandStringFrom(chars, string) {
     var random_string = "";
-  
+
     for (var char = 0; char < string.length + 1; char++) {
-      if (string[char] == " ") random_string += " ";
-      else random_string += chars.charAt(Math.randInt(0, chars.length));
+        if (string[char] == " ") random_string += " ";
+        else random_string += chars.charAt(Math.randInt(0, chars.length));
     }
-  
+
     return random_string;
-  }
+}
 
 function isToday(date) {
     const now = new Date()
@@ -77,39 +77,39 @@ const composeTodo = () => {
 
     setTimeout(() => {
         activity_todo.style.display = "block";
-        
+
         (function loop() {
             var original_content = activity.Todo;
             var current_length = 0;
-        
+
             // This is the update loop that updates for every character in the original string.
-            var appearUpdate = setInterval(function() {
-              // Get the current length substring from the orifinal content.
-              var substring_section = original_content.substring(0, current_length);
-              
-              // If the first or last characters are spaces, make them non-breaking so the text doesn't stagger.
-              substring_section = substring_section.replace(/^ /, "\xa0").replace(/ $/, "\xa0");
-              
-              // Get the randomised version of the substring above.
-              var random_string = getRandStringFrom("@#$%^", substring_section);
-        
-              // Set the respective elements.
-              // random_appear.innerText = random_string;
-              activity_todo.innerText = substring_section;
-        
-              // Increase the length and prepare for the next update.
-              current_length++;
-        
-              // If the current string length is as long as the final message, it must be done.
-              if (current_length > original_content.length) clearInterval(appearUpdate);
+            var appearUpdate = setInterval(function () {
+                // Get the current length substring from the orifinal content.
+                var substring_section = original_content.substring(0, current_length);
+
+                // If the first or last characters are spaces, make them non-breaking so the text doesn't stagger.
+                substring_section = substring_section.replace(/^ /, "\xa0").replace(/ $/, "\xa0");
+
+                // Get the randomised version of the substring above.
+                var random_string = getRandStringFrom("@#$%^", substring_section);
+
+                // Set the respective elements.
+                // random_appear.innerText = random_string;
+                activity_todo.innerText = substring_section;
+
+                // Increase the length and prepare for the next update.
+                current_length++;
+
+                // If the current string length is as long as the final message, it must be done.
+                if (current_length > original_content.length) clearInterval(appearUpdate);
             }, 50);
-        
+
             // Run this current loop again.
             // setTimeout(loop, 5000);
-          })();
+        })();
     }, 1000)
 
-    
+
 }
 
 function WordShuffler(holder, opt) {

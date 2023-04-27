@@ -335,6 +335,15 @@ a:hover {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative;
+}
+
+.container-text {
+
+    height: 70vh;
+    overflow-y: auto;
+
+    position: relative;
 }
 
 .custom-btn {
