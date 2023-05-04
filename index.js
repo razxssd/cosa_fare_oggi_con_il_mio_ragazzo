@@ -32,6 +32,24 @@ var todo_of_the_day = [{
     "Date": "2023-05-01T21:00:00.000Z"
 }]
 
+function shuffleArray(array) {
+    let currentIndex = array.length,  randomIndex;
+  
+    // While there remain elements to shuffle.
+    while (currentIndex != 0) {
+  
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+  
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+  
+    return array;
+  }
+
 // Add a random integer to Math, as it should be.
 Math.randInt = function (min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -60,7 +78,12 @@ function isToday(date) {
 
 
 const composeTodo = () => {
-    const activity = todo_of_the_day.find(el => isToday(new Date(el.Date)))
+    // const activity = todo_of_the_day.find(el => isToday(new Date(el.Date)))
+    // Get a random activity
+    const todo_arr = shuffleArray(todo_of_the_day)
+    const activity = todo_arr[Math.floor(Math.random()*todo_arr.length)];
+    console.log('activity: ', activity)
+
     const title_todo = document.getElementById('title_todo');
     title_todo.innerText = activity.Title;
 
